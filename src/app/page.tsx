@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Welcome | Jihoo Kim',
+  title: 'Welcome | Skyler Minsu Bang',
 };
 
 export default function HomePage() {

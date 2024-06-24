@@ -10,8 +10,8 @@ import '@/styles/paginate.css';
 
 export const metadata = {
   title: {
-    default: 'Jihoo Kim',
-    template: '%s | Jihoo Kim',
+    default: 'Skyler Minsu Bang',
+    template: '%s | Skyler Minsu Bang',
   },
 };
 
