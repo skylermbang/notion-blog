@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { metadata } from './aboutMetadata'; // Import the metadata
 
 export default function AboutPage() {
@@ -25,7 +25,12 @@ export default function AboutPage() {
   );
 }
 
-function Section({ title, children }) {
+type SectionProps = {
+  title: string;
+  children: ReactNode;
+};
+
+function Section({ title, children }: SectionProps) {
   return (
     <div className="p-6 mt-6 border border-gray-300 rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-4">{title}</h2>
@@ -78,7 +83,7 @@ function Education() {
       <p>Master of Information Technology in Software Development</p>
 
       <h3 className="font-semibold mt-4">University of Liverpool, Liverpool, UK</h3>
-      <p>Bachelor's of Engineering in Electrical Engineering (Honors) - Dual Degree Obtained from XJTLU China</p>
+      <p>Bachelor&apos;s of Engineering in Electrical Engineering (Honors) - Dual Degree Obtained from XJTLU China</p>
     </div>
   );
 }
@@ -111,7 +116,7 @@ function ProjectExperience() {
       <p>AI Sound Classification Application</p>
       <ul className="list-disc list-inside ml-4">
         <li>Developed AI Arduino-based robot for smart home.</li>
-        <li>Achieved 97% accuracy in TensorFlow-CNN-based 'dangerous' sound training.</li>
+        <li>Achieved 97% accuracy in TensorFlow-CNN-based &apos;dangerous&apos; sound training.</li>
         <li>Received the IET Best Poster Award in 2019.</li>
       </ul>
 
@@ -134,8 +139,8 @@ function OtherInformation() {
       <p><strong>Awards:</strong> Creative Award (2022), IET Best Poster Award (2018-2019)</p>
       <p><strong>Publications:</strong></p>
       <ul className="list-disc list-inside ml-4">
-        <li>Zhao Yang Chen, Cheng Chen, Bo Bang, Minsu (2019). “Pavement damage detection system using big data analysis of multiple sensor.” International Conference on Smart Infrastructure and Construction (ICSIC), UK.</li>
-        <li>Zhao Yang Chen, Cheng Chen, Bo Bang, Minsu (2019). “Automatic Pavement Crack Detection Based on Image Recognition." International Conference on Smart Infrastructure and Construction (ICSIC), UK.</li>
+        <li>Zhao Yang Chen, Cheng Chen, Bo Bang, Minsu (2019). &quot;Pavement damage detection system using big data analysis of multiple sensor.&quot; International Conference on Smart Infrastructure and Construction (ICSIC), UK.</li>
+        <li>Zhao Yang Chen, Cheng Chen, Bo Bang, Minsu (2019). &quot;Automatic Pavement Crack Detection Based on Image Recognition.&quot; International Conference on Smart Infrastructure and Construction (ICSIC), UK.</li>
       </ul>
     </div>
   );
