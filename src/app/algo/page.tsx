@@ -1,0 +1,32 @@
+import CategoryFilter from '@/components/filter/category-filter';
+import SearchBar from '@/components/filter/search-bar';
+import PostsGrid from '@/components/posts/posts-grid';
+import { getAllPostsFromNotion } from '@/services/algo';
+import { toUniqueArray } from '@/utils/to-unique-array';
+
+export const metadata = {
+  title: 'Algo',
+  description: 'Algorithm Test and Data Structure ',
+};
+
+export default async function BlogPage() {
+  const allPosts = await getAllPostsFromNotion();
+
+  const allCategories = toUniqueArray(
+    allPosts
+      .filter((post) => post.published)
+      .map((post) => post.categories)
+      .flat()
+  ).sort();
+  console.log(allPosts)
+
+  return (
+    <>
+      <section className="mb-16 mt-0 space-y-8 md:mt-20">
+        <SearchBar />
+        <CategoryFilter allCategories={allCategories} />
+      </section>
+      <PostsGrid allPosts={allPosts} />
+    </>
+  );
+}
