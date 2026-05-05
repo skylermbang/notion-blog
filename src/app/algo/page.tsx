@@ -18,7 +18,6 @@ export default async function BlogPage() {
       .map((post) => post.categories)
       .flat()
   ).sort();
-  console.log(allPosts)
 
   return (
     <>
@@ -26,7 +25,7 @@ export default async function BlogPage() {
         <SearchBar />
         <CategoryFilter allCategories={allCategories} />
       </section>
-      <PostsGrid allPosts={allPosts} />
+      <PostsGrid allPosts={allPosts} basePath="algo" />
     </>
   );
 }

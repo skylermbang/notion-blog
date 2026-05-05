@@ -18,7 +18,6 @@ export default async function BlogPage() {
       .map((post) => post.categories)
       .flat()
   ).sort();
-  console.log(allPosts)
 
   return (
     <>

@@ -5,8 +5,46 @@ const notion = new NotionAPI({
   authToken: process.env.NOTION_AUTH_TOKEN,
 });
 
-export function getRecordMap(id: string) {
-  return notion.getPage(id);
+function normalizeRecordMap(recordMap: any) {
+  // notion-client now returns block[id] = { spaceId, value: { value: Block, role } }
+  // but react-notion-x expects block[id] = { role, value: Block }
+  // Unwrap the extra nesting so both libs are compatible.
+  for (const id of Object.keys(recordMap.block)) {
+    const entry = recordMap.block[id] as any;
+    if (entry?.value?.value !== undefined) {
+      recordMap.block[id] = { role: entry.value.role, value: entry.value.value };
+    }
+  }
+  for (const id of Object.keys(recordMap.collection ?? {})) {
+    const entry = recordMap.collection[id] as any;
+    if (entry?.value?.value !== undefined) {
+      recordMap.collection[id] = { role: entry.value.role, value: entry.value.value };
+    }
+  }
+  return recordMap;
+}
+
+export async function getRecordMap(id: string) {
+  const recordMap = await notion.getPage(id);
+  normalizeRecordMap(recordMap);
+
+  // Find the collection_view block to get collection + view IDs
+  const cvBlock = Object.values(recordMap.block).find((b: any) => {
+    return b?.value?.type === 'collection_view';
+  }) as any;
+
+  if (cvBlock) {
+    const collectionId = cvBlock?.value?.collection_id;
+    const viewId = cvBlock?.value?.view_ids?.[0];
+
+    if (collectionId && viewId) {
+      const collData = await notion.getCollectionData(collectionId, viewId, { limit: 999 });
+      normalizeRecordMap(collData.recordMap);
+      Object.assign(recordMap.block, collData.recordMap.block ?? {});
+    }
+  }
+
+  return recordMap;
 }
 
 export function mapImageUrl(url: string, block: Block): string | null {

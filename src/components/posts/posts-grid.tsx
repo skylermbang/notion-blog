@@ -7,7 +7,7 @@ import PostCard from '@/components/posts/post-card';
 import usePosts from '@/hooks/use-posts';
 import { Post } from '@/types/post';
 
-export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
+export default function PostsGrid({ allPosts, basePath = 'blog' }: { allPosts: Post[]; basePath?: string }) {
   const { posts, totalPages } = usePosts(allPosts);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +23,7 @@ export default function PostsGrid({ allPosts }: { allPosts: Post[] }) {
         >
           {posts.map((post) => (
             <li key={post.slug}>
-              <PostCard post={post} />
+              <PostCard post={post} basePath={basePath} />
             </li>
           ))}
         </ul>

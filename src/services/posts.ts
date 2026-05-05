@@ -6,7 +6,8 @@ export async function getAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
   const { block, collection } = recordMap;
-  const schema = Object.values(collection)[0].value.schema;
+
+  const schema = (Object.values(collection)[0] as any).value.schema;
   const propertyMap: Record<string, string> = {};
 
   Object.keys(schema).forEach((key) => {
@@ -14,21 +15,18 @@ export async function getAllPostsFromNotion() {
   });
 
   Object.keys(block).forEach((pageId) => {
-    if (
-      block[pageId].value.type === 'page' &&
-      block[pageId].value.properties[propertyMap['Slug']]
-    ) {
-      const { properties, last_edited_time } = block[pageId].value;
+    const val = block[pageId].value as any;
+    if (val?.type === 'page' && val?.properties?.[propertyMap['Slug']]) {
+      const { properties, last_edited_time } = val;
 
-      const contents = block[pageId].value.content || [];
-      const dates = contents.map((content) => {
-        return block[content]?.value?.last_edited_time;
+      const contents = val.content || [];
+      const dates = contents.map((content: string) => {
+        return (block[content]?.value as any)?.last_edited_time;
       });
       dates.push(last_edited_time);
-      dates.sort((a, b) => b - a);
+      dates.sort((a: number, b: number) => b - a);
       const lastEditedAt = dates[0];
 
-      const id = pageId;
       const slug = properties[propertyMap['Slug']][0][0];
       const title = properties[propertyMap['Page']][0][0];
       const categories = properties[propertyMap['Category']][0][0].split(',');
@@ -37,12 +35,10 @@ export async function getAllPostsFromNotion() {
       const published = properties[propertyMap['Published']][0][0] === 'Yes';
 
       allPosts.push({
-        id,
+        id: pageId,
         title,
         slug,
         categories,
-        // Fix 403 error for images.
-        // https://github.com/NotionX/react-notion-x/issues/211
         cover: mapImageUrl(cover, block[pageId].value) || '',
         date,
         published,

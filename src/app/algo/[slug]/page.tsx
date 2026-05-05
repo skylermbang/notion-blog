@@ -16,7 +16,8 @@ export default async function PostPage({
 }) {
   const allPosts = await getAllPostsFromNotion();
 
-  const post = allPosts.find((p) => p.slug === slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const post = allPosts.find((p) => p.slug === decodedSlug || p.slug === slug);
   if (!post) {
     return notFound();
   }
@@ -82,7 +83,8 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const allPosts = await getAllPostsFromNotion();
-  const post = allPosts.find((p) => p.slug === slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const post = allPosts.find((p) => p.slug === decodedSlug || p.slug === slug);
 
   return post
     ? {

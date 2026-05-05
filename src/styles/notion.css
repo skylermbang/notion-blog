@@ -31,3 +31,39 @@
 .notion-page-content img{
     position: static !important;
 }
+
+.dark .notion-frame {
+  --fg-color: rgba(255, 255, 255, 0.9);
+  --fg-color-0: rgba(255, 255, 255, 0.9);
+  --fg-color-1: rgba(255, 255, 255, 0.9);
+  --fg-color-2: rgba(255, 255, 255, 0.7);
+  --fg-color-3: rgba(255, 255, 255, 0.5);
+  --fg-color-4: rgba(255, 255, 255, 0.9);
+  --fg-color-5: rgba(255, 255, 255, 0.9);
+  --fg-color-6: rgba(255, 255, 255, 0.9);
+  --fg-color-icon: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark .notion-page-title-text,
+.dark .notion-text,
+.dark .notion-h1,
+.dark .notion-h2,
+.dark .notion-h3,
+.dark .notion-toggle,
+.dark .notion-quote,
+.dark .notion-callout,
+.dark .notion-bulleted_list,
+.dark .notion-numbered_list,
+.dark .notion-table-of-contents-item {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark .notion-inline-code {
+  color: #e06c75 !important;
+  background: rgba(135, 131, 120, 0.15) !important;
+}
+
+.dark .notion-link {
+  color: #529cca !important;
+}
