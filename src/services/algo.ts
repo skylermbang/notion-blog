@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache';
+import { cache } from 'react';
 
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
@@ -56,8 +56,4 @@ async function fetchAllPostsFromNotion() {
   return allPosts;
 }
 
-export const getAllPostsFromNotion = unstable_cache(
-  fetchAllPostsFromNotion,
-  ['algo-posts'],
-  { revalidate: 3600 }
-);
+export const getAllPostsFromNotion = cache(fetchAllPostsFromNotion);

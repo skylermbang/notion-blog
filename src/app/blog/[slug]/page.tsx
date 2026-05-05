@@ -71,13 +71,6 @@ export default async function PostPage({
   );
 }
 
-export async function generateStaticParams() {
-  const allPosts = await getAllPostsFromNotion();
-
-  return allPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
 
 export async function generateMetadata({
   params: { slug },
