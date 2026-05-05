@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 3600;
+
 import NotionPage from '@/components/notion-page';
 import RelatedPosts from '@/components/posts/related-posts';
 import { getRecordMap } from '@/libs/notion';

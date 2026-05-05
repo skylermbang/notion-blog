@@ -1,8 +1,10 @@
+import { unstable_cache } from 'next/cache';
+
 import { getRecordMap, mapImageUrl } from '@/libs/notion';
 import { Post } from '@/types/post';
 import { getBlurImage } from '@/utils/get-blur-image';
 
-export async function getAllPostsFromNotion() {
+async function fetchAllPostsFromNotion() {
   const allPosts: Post[] = [];
   const recordMap = await getRecordMap(process.env.NOTION_DATABASE_ID!);
   const { block, collection } = recordMap;
@@ -53,3 +55,9 @@ export async function getAllPostsFromNotion() {
 
   return allPosts;
 }
+
+export const getAllPostsFromNotion = unstable_cache(
+  fetchAllPostsFromNotion,
+  ['blog-posts'],
+  { revalidate: 3600 }
+);
